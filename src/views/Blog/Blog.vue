@@ -11,7 +11,10 @@ const { result, loading, error } = useQuery(GET_ARTICLE, { slug });
 
 <template>
   <div class="blog-page container">
-    <div v-if="loading" class="loading">Завантаження...</div>
+    <div v-if="loading" class="preloader">
+      <div class="spinner"></div>
+      <p>Завантаження...</p>
+    </div>
     <div v-else-if="error" class="error">Помилка: {{ error.message }}</div>
 
     <div v-else-if="result && result.blog" class="blog-content">
@@ -62,11 +65,34 @@ const { result, loading, error } = useQuery(GET_ARTICLE, { slug });
   color: #333;
 }
 
-.loading, .error {
+.preloader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #ddd;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error {
   text-align: center;
   font-size: 1.2rem;
   padding: 2rem;
-  color: #555;
+  color: #b91c1c;
 }
 
 .blog-wrapper {
